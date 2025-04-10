@@ -62,6 +62,10 @@ function formatPiece(p) {
 
 // [... 생략: 모든 변수 및 함수 정의는 기존 그대로 유지 ...]
 
+// ✅ JavaScript: 콰르토 게임 전체 스크립트 (모바일 최적화, 멀티플레이 제외)
+
+// [... 생략: 모든 변수 및 함수 정의는 기존 그대로 유지 ...]
+
 function renderBoard() {
   const boardDiv = document.getElementById("board");
   boardDiv.innerHTML = "";
@@ -107,6 +111,7 @@ function renderBoard() {
 
 // [... 생략: 나머지 함수는 기존 그대로 유지 ...]
 
+// ✅ 말 선택 UI에서 체크 아이콘 표시 추가
 function renderPieceSelector() {
   const selector = document.getElementById("piece-selector");
   selector.innerHTML = "";
@@ -116,6 +121,18 @@ function renderPieceSelector() {
     btn.className = "piece";
     if (selectedPiece && selectedPiece.id === p.id) {
       btn.classList.add("selected");
+
+      // ✅ 체크 아이콘 추가
+      const check = document.createElement("div");
+      check.innerText = "✔";
+      check.style.position = "absolute";
+      check.style.top = "4px";
+      check.style.right = "4px";
+      check.style.fontSize = "16px";
+      check.style.color = "#2196f3";
+      check.style.fontWeight = "bold";
+      btn.appendChild(check);
+      btn.style.position = "relative";
     }
     const img = formatPiece(p);
     btn.appendChild(img);
@@ -124,13 +141,24 @@ function renderPieceSelector() {
   });
 }
 
+// [... 생략: 나머지 함수는 기존 그대로 유지 ...]
+
+// ✅ 말 선택 함수 수정: 선택 취소 없이 다른 말로 교체 가능 + 체크 아이콘 표시
 function selectPiece(pieceId) {
-  if (isGameOver || selectedPiece) return;
+  if (isGameOver) return;
   const piece = allPieces.find(p => p.id === pieceId && !p.used);
   if (!piece) return;
-  selectedPiece = piece;
-  log(`${turnCount}턴 - Player ${1 - currentPlayer + 1}: 말 ${getPieceCode(piece)} 선택`);
-  if (navigator.vibrate) navigator.vibrate(50);
+
+  if (selectedPiece && selectedPiece.id === piece.id) {
+    // 같은 말 다시 누르면 취소
+    selectedPiece = null;
+    log(`선택 취소: ${getPieceCode(piece)}`);
+  } else {
+    selectedPiece = piece;
+    log(`${turnCount}턴 - Player ${1 - currentPlayer + 1}: 말 ${getPieceCode(piece)} 선택`);
+    if (navigator.vibrate) navigator.vibrate(50);
+  }
+
   renderPieceSelector();
   updateTurnInfo();
 }
