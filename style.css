@@ -1,0 +1,138 @@
+/* ✅ CSS: 콰르토 게임 모바일 최적화 및 UX 향상 스타일 */
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f8f8;
+  text-align: center;
+}
+
+#game-container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+#board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin: 0 auto;
+  width: 90vw;
+  max-width: 400px;
+  aspect-ratio: 1 / 1;
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.cell {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.cell.win {
+  border: 3px solid #4caf50;
+}
+
+.cell.selected-cell {
+  border: 2px dashed #2196f3;
+}
+
+#piece-selector {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+  gap: 6px;
+  margin-top: 12px;
+  padding: 8px;
+  max-width: 90vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.piece {
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 4px;
+  background-color: #fff;
+  transition: background-color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.piece.selected {
+  border: 3px solid #2196f3;
+  background-color: #e3f2fd;
+  box-shadow: 0 0 8px rgba(33, 150, 243, 0.5);
+}
+
+#turn-info {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+#log-box {
+  max-height: 120px;
+  overflow-y: auto;
+  margin-top: 10px;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 8px;
+  font-size: 14px;
+  line-height: 1.4;
+  box-sizing: border-box;
+}
+
+#controls {
+  margin-top: 16px;
+}
+
+button {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1976d2;
+}
+
+.attr-image-overlay {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 22px;
+  height: 22px;
+  z-index: 10;
+  opacity: 0.9;
+  pointer-events: none;
+  animation: blink 1s infinite ease-in-out;
+}
+
+@keyframes blink {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(1.15); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@media screen and (max-width: 480px) {
+  #board, #piece-selector {
+    max-width: 90vw;
+  }
+  .piece {
+    max-width: 64px;
+  }
+  #log-box {
+    font-size: 13px;
+  }
+}
